@@ -1,0 +1,35 @@
+.chat {
+  padding: 1rem;
+  position: relative;
+}
+
+.chat__msg {
+  margin-bottom: 0.5rem;
+  background: #4080FF;
+  color: white;
+  max-width: 80%;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  float: left;
+  clear: both;
+}
+
+.chat__msg--me {
+  margin-bottom: 0.5rem;
+  margin-left:auto;
+  margin-right:0;
+  background: #F1F0F0;
+  color: black;
+  max-width: 80%;
+  float: right;
+  clear: both;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  text-align: right;
+}
+
+.chat__input {
+  position: absolute;
+  bottom: 0;
+  width: 90%;
+}

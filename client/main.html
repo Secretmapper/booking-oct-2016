@@ -1,0 +1,89 @@
+<head>
+  <title>booking</title>
+</head>
+
+<body>
+  {{> mainView }}
+</body>
+
+<template name='mainView'>
+  <div class='main-view'>
+    {{> chat }}
+    {{> property }}
+  </div>
+</template>
+
+<template name='chat'>
+  <div class='chat'>
+    {{ #each chat }}
+      <div class='{{ chatColor this }}'>
+        {{msg}}
+      </div>
+    {{ /each }}
+    <div class='chat__input'>
+      <form class='chat__input-form'>
+        <div class="input-field">
+          <input placeholder='Type a message' id='first_name' name='msg' type='text' class='validate'>
+        </div>
+      </form>
+      {{> login }}
+    </div>
+  </div>
+</template>
+
+<template name='property'>
+  <div class='property'>
+    <div class='property-card card large'>
+      <div class='card-image'>
+        <img src='http://q-ec.bstatic.com/images/hotel/840x460/544/54463340.jpg'>
+        <span class='card-title'>Ascott Makati</span>
+      </div>
+      <div class='card-content'>
+        <div class='propety-card__details'>
+          <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+          {{#if currentUser}}
+            {{> waitingList }}
+            <div class='card-action'>
+              <a class='btn'>Book</a>
+              <a class='btn'>Book and Share</a>
+            </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name='login'>
+  {{#if currentUser}}
+    <button class='btn btn-primary logout'>Logout</button>
+  {{else}}
+    <button class='btn btn-primary btn-facebook'>Login to enable sharing</button>
+  {{/if}}
+</template>
+
+<template name='waitingList'>
+  <div>
+    {{ #each waitingList }}
+      <div class='row'>
+        {{ #each row }}
+          <div class='col s12 m12 l4'>
+            <div class='property__waiting-list'>
+              <div class='property__waiting-list-header'>
+                Ariana Grande
+                <a class="waves-effect waves-teal btn-flat btn-join" data-id="{{this._id}}">Join</a>
+              </div>
+              <div class='property__waiting-lists'>
+                {{ user_ids }}
+                {{ #each user_ids }}
+                  <div>{{ name }}</div>
+                {{ /each }}
+                <div style='color: grey'>+1 more slot</div>
+              </div>
+            </div>
+          </div>
+        {{ /each }}
+      </div>
+    {{ /each }}
+  </div>
+</template>
