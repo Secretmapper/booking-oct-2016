@@ -5,6 +5,11 @@ import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
 import { Chat, WaitingList } from '../lib/Collections.js'
 import './main.html';
+import uuid from 'node-uuid'
+
+const sess_id = uuid.v4()
+Session.set('sess_id', sess_id)
+Session.set('context', "{}")
 
 BlazeLayout.setRoot('body');
 
@@ -26,7 +31,7 @@ Template.chat.helpers({
   chatLoading() {
     return Template.instance().chatLoading.get();
   },
-  chat: Chat.find({}),
+  chat: Chat.find({ sess_id: Session.get('sess_id') }),
   chatColor(chat) {
     if (chat.me) {
       return 'chat__msg--me';
@@ -45,15 +50,14 @@ Template.chat.events({
     const msg = e.target.msg.value
     e.target.msg.value = ''
 
-    Chat.insert({ me: true, msg })
+    Chat.insert({ sess_id: Session.get('sess_id'), me: true, msg })
     Session.set('searchData', msg)
 
     instance.chatLoading.set(true)
-    Meteor.call('getHotel', msg, (err, { msgs, data }) => {
+    Meteor.call('chat', Session.get('sess_id'), msg, JSON.parse(Session.get('context')), (err, context) => {
+      console.log(context)
+      Session.set('context', context)
       instance.chatLoading.set(false)
-      msgs.map((msg, i) => {
-        setTimeout(() => Chat.insert({ me: false, msg }), i * 1000)
-      })
     })
   }
 });
