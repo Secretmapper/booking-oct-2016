@@ -9,7 +9,15 @@ Template.chat.onCreated(function helloOnCreated() {
   this.counter = new ReactiveVar(0);
 });
 
+
+Template.chat.onCreated(function () {
+  this.chatLoading = new ReactiveVar(false);
+})
+
 Template.chat.helpers({
+  chatLoading() {
+    return Template.instance().chatLoading.get();
+  },
   chat: Chat.find({}),
   chatColor(chat) {
     if (chat.me) {
@@ -24,11 +32,21 @@ Template.chat.helpers({
 });
 
 Template.chat.events({
-  'submit .chat__input-form'(e) {
+  'submit .chat__input-form'(e, instance) {
     e.preventDefault()
     const msg = e.target.msg.value
     e.target.msg.value = ''
+
     Chat.insert({ me: true, msg })
+    Session.set('searchData', msg)
+
+    instance.chatLoading.set(true)
+    Meteor.call('getHotel', msg, (err, { msgs, data }) => {
+      instance.chatLoading.set(false)
+      msgs.map((msg, i) => {
+        setTimeout(() => Chat.insert({ me: false, msg }), i * 1000)
+      })
+    })
   }
 });
 

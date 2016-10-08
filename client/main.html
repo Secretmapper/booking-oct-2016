@@ -20,6 +20,9 @@
         {{msg}}
       </div>
     {{ /each }}
+    {{ #if chatLoading }}
+      <div class='chat__msg--loading'>...</div>
+    {{ /if }}
     <div class='chat__input'>
       <form class='chat__input-form'>
         <div class="input-field">

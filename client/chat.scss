@@ -14,6 +14,13 @@
   clear: both;
 }
 
+.chat__msg--loading {
+  margin: 0 auto;
+  margin-bottom: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  clear: both;
+}
 .chat__msg--me {
   margin-bottom: 0.5rem;
   margin-left:auto;

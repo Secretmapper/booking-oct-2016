@@ -27,3 +27,5 @@ shcherbin:slickjs
 horka:swipebox
 accounts-ui
 accounts-facebook
+http
+session
