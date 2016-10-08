@@ -1,0 +1,43 @@
+<template name='bookShare'>
+  <!-- Modal Trigger -->
+  
+
+  <!-- Modal Structure -->
+  <div class="modal modal-fixed-footer" id="modal1">
+    <form id="waitListForm" class="col s12 waitListForm">
+	    <div class="modal-content">
+	      <h4>Add new waiting list</h4>
+	      <p></p>
+	      <div class="row">
+	      
+	        <div class="row">
+	          <div class="input-field col s6">
+	            <input name="header" class="validate" id="header" placeholder="Header"
+	            type="text"> <label for="header">Header</label>
+	          </div>
+	        </div>
+	        <div class="row">
+	          <div class="input-field col s12">
+	            <textarea name="description" class="materialize-textarea" id="description"></textarea>
+	            <label for="description">Description</label>
+	          </div>
+	        </div>
+	      </div>
+	      <p></p>
+	    </div>
+	    <div class="modal-footer">
+	      <input type="submit" class="sendForm modal-action modal-close waves-effect waves-green btn-flat"
+	      	value="Submit"/>
+	      <a class="modal-action modal-close waves-effect waves-green btn-flat" href="#!">
+	      	Cancel
+	      </a>
+	    </div>
+    </form>
+  </div>
+  <script>
+  	$(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal-trigger').leanModal();
+  });
+  </script>
+</template>

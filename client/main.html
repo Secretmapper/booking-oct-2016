@@ -42,7 +42,7 @@
         <span class='card-title'>Ascott Makati</span>
         <div class='property-card__actions'>
           <a class='btn light-blue'>Book</a>
-          <a class='btn book-share light-blue {{#unless currentUser}} disabled {{/unless}}'>Book and Share</a>
+          <button data-target="modal1" class="btn book-share light-blue modal-trigger {{#unless currentUser}} disabled {{/unless}}">Share Booking</button>
         </div>
       </div>
       <div class='card-content'>
@@ -53,6 +53,7 @@
       </div>
     </div>
   </div>
+  {{> bookShare }}
 </template>
 
 <template name='login'>
@@ -65,16 +66,27 @@
 
 <template name='waitingList'>
   <div>
+    <ul class="collapsible" data-collapsible="accordion">
     {{ #each waitingList }}
       <div class='row'>
         {{ #each row }}
           <div class='col s12 m12 l4'>
             <div class='property__waiting-list'>
-              <div class='property__waiting-list-header'>
-                Ariana Grande
-                <a class="waves-effect waves-teal btn-flat btn-join {{ #unless currentUser }} disabled {{ /unless }}" data-id="{{this._id}}">Join</a>
-              </div>
+              <li>
+                <div class='property__waiting-list-header collapsible-header'>
+                  {{ header }}
+                  {{ #if hasJoined }}
+                  <a class="waves-effect waves-teal btn-flat btn-join {{ #unless currentUser }} disabled {{ /unless }}" data-id="{{this._id}}">Join</a>
+                  {{ /if }}
+                </div>
+              </li>
+              <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
               <div class='property__waiting-lists'>
+                {{ #if isInWaitList this}}
+                  {{ #each user_ids }}
+                    <div style='color: blue'>{{ name }}</div>
+                  {{ /each }}
+                {{ /if }}
                 <div style='color: grey'>+{{ slotsLeft this }} more slots</div>
               </div>
             </div>
@@ -82,5 +94,14 @@
         {{ /each }}
       </div>
     {{ /each }}
+    </ul>
   </div>
+  <script>
+    $(document).ready(function(){
+      console.log('called');
+    $('.collapsible').collapsible({
+      accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+    });
+  });
+  </script>
 </template>

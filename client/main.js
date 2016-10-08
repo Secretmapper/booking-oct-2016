@@ -18,6 +18,10 @@ Template.chat.onCreated(function () {
   this.chatLoading = new ReactiveVar(false);
 })
 
+Template.waitingList.onCreated(function () {
+  this.userJoined = new ReactiveVar(false);
+})
+
 Template.chat.helpers({
   chatLoading() {
     return Template.instance().chatLoading.get();
@@ -58,22 +62,24 @@ Template.property.onRendered(function () {
 })
 
 Template.property.helpers({
-  imgs: [1,2,3]
-})
-
-Template.property.events({
-  'click .book-share'(event) {
-    event.preventDefault()
-    WaitingList.insert({
-      max: 4,
-      user_ids: [{ _id: Meteor.userId(), name: Meteor.user().profile.name }]
-    })
-  }
+  imgs: [1,2,3],
 })
 
 Template.waitingList.helpers({
   slotsLeft: function (s) {
    return s.max - s.user_ids.length
+  },
+  hasJoined: function() {
+    return Template.instance().userJoined.get()
+  },
+  isInWaitList: function (s) {
+    for (var i = s.user_ids.length - 1; i >= 0; i--) {
+      if (s.user_ids[i]._id == Meteor.userId()) {
+        return true;
+        Template.instance().userJoined.set(true)
+      }
+    }
+    return false
   },
   waitingList: function() {
     let all = WaitingList.find({}).fetch()
