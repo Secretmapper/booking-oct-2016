@@ -39,7 +39,20 @@ Template.property.helpers({
   imgs: [1,2,3]
 })
 
+Template.property.events({
+  'click .book-share'(event) {
+    event.preventDefault()
+    WaitingList.insert({
+      max: 4,
+      user_ids: [{ _id: Meteor.user()._id, name: Meteor.user().profile.name }]
+    })
+  }
+})
+
 Template.waitingList.helpers({
+  slotsLeft: function (s) {
+   return s.max - s.user_ids.length
+  },
   waitingList: function() {
     let all = WaitingList.find({}).fetch()
     let chunks = []

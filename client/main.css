@@ -38,3 +38,9 @@ body {
    -ms-box-flex: 1;
    box-flex: 1;  
 }
+
+.property-card__actions {
+  position: absolute;
+  bottom: 0;
+  right: 12px;
+}
