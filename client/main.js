@@ -1,8 +1,12 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
+import { BlazeLayout } from 'meteor/kadira:blaze-layout';
+
 import { Chat, WaitingList } from '../lib/Collections.js'
 import './main.html';
+
+BlazeLayout.setRoot('body');
 
 Template.chat.onCreated(function helloOnCreated() {
   // counter starts at 0
@@ -62,7 +66,7 @@ Template.property.events({
     event.preventDefault()
     WaitingList.insert({
       max: 4,
-      user_ids: [{ _id: Meteor.user()._id, name: Meteor.user().profile.name }]
+      user_ids: [{ _id: Meteor.userId(), name: Meteor.user().profile.name }]
     })
   }
 })
@@ -89,7 +93,7 @@ Template.waitingList.events({
     event.preventDefault()
     const target = event.target.dataset.id
     WaitingList.update(target, {
-      $addToSet: { user_ids: { _id: Meteor.user()._id, name: Meteor.user().profile.name } }
+      $addToSet: { user_ids: { _id: Meteor.userId(), name: Meteor.user().profile.name } }
     })
   }
 })
