@@ -24,12 +24,12 @@
             {{ username sender }}
           </div>
           <div class='{{ chatColor this }}'>
-            {{msg}}
+            {{{msg}}}
           </div>
         {{ /if }}
         {{ #unless activeChat }}
           <div class='{{ chatColor this }}'>
-            {{msg}}
+            {{{msg}}}
           </div>
         {{ /unless }}
       {{ /each }}
@@ -56,10 +56,14 @@
 
 <template name='property'>
   <div class='property'>
+    {{ #if currentHotel }}
+    {{ #with currentHotel }}
     <div class='property-card card'>
       <div class='card-image'>
-        <img src='http://q-ec.bstatic.com/images/hotel/840x460/544/54463340.jpg'>
-        <span class='card-title'>Ascott Makati</span>
+        <img src='{{photo}}'>
+        <span class='card-title'>{{hotel_name}}
+          <div style='color:gray;font-size:1rem'>{{price}} {{hotel_currency_code}}</div>
+        </span>
         <div class='property-card__actions'>
           <a class='btn light-blue'>Book</a>
           <button id="shareBooking" data-target="modal1" class="btn book-share light-blue modal-trigger {{#unless currentUser}} disabled {{/unless}}">Share Booking</button>
@@ -67,11 +71,12 @@
       </div>
       <div class='card-content'>
         <div class='propety-card__details'>
-          <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
           {{> waitingList }}
         </div>
       </div>
     </div>
+    {{ /with}}
+    {{/if}}
   </div>
   {{> bookShare }}
   {{> user }}

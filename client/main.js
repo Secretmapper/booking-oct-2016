@@ -86,6 +86,7 @@ Template.chat.events({
   'submit .chat__input-form'(e, instance) {
     e.preventDefault()
     const msg = e.target.msg.value
+    if (e.target.msg.value == '') return
     e.target.msg.value = ''
 
     if (Session.get('activeChat')) {
@@ -111,7 +112,14 @@ Template.property.onRendered(function () {
 })
 
 Template.property.helpers({
-  imgs: [1,2,3],
+  currentHotel: () => {
+    const hotels = Chat.find({sess_id: Session.get('sess_id'), me:'hotel'}).fetch()
+    const last = hotels[hotels.length-1]
+    console.log(last.hotel)
+    Session.set('hotel_id', last.hotel.hotel_id)
+    return last.hotel
+  },
+  imgs: [1,2,3]
 })
 
 Template.waitingList.helpers({
@@ -140,7 +148,7 @@ Template.waitingList.helpers({
     return false
   },
   waitingList: function() {
-    let all = WaitingList.find({}).fetch()
+    let all = WaitingList.find({ hotel_id: Session.get('hotel_id') }).fetch()
     let chunks = []
     let size = 3;
     while (all.length > size) {
