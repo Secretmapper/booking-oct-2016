@@ -76,6 +76,8 @@
               <li>
                 <div class='property__waiting-list-header collapsible-header'>
                   {{ header }}
+                  <p>{{ description }}</p>
+                  
                   {{ #if hasNotJoined }}
                     <a class="waves-effect waves-teal btn-flat btn-join {{ #unless currentUser }} disabled {{ /unless }}" data-id="{{this._id}}">Join</a>
                   {{ /if }}
