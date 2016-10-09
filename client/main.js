@@ -114,5 +114,12 @@ Template.waitingList.events({
     WaitingList.update(target, {
       $addToSet: { user_ids: { _id: Meteor.userId(), name: Meteor.user().profile.name } }
     })
-  }
+  },
+  'click .userProfile'(event) {
+    event.preventDefault()
+    const id = event.currentTarget.lastElementChild.value
+    console.log(id)
+    Session.set("id", id);
+    $('#userModal').openModal();
+  },
 })

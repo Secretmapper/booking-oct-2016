@@ -14,6 +14,10 @@ Meteor.startup(() => {
 	    	options.profile.name = "test name"
 	    	user.profile = options.profile
 	    }
+	    
+	    if (typeof(user.services.facebook) != "undefined") {
+	        user.services.facebook.picture = "http://graph.facebook.com/" + user.services.facebook.id + "/picture/?type=large";
+	    }
 
 	    return user
 	});

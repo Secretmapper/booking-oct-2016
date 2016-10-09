@@ -54,6 +54,7 @@
     </div>
   </div>
   {{> bookShare }}
+  {{> user }}
 </template>
 
 <template name='login'>
@@ -84,7 +85,10 @@
               <div class='property__waiting-lists'>
                 {{ #if isInWaitList this}}
                   {{ #each user_ids }}
-                    <div style='color: blue'>{{ name }}</div>
+                    <div style='color: blue' class="userProfile">
+                      <a  href="#!" name="userProfile">{{ name }}</a>
+                      <input type="hidden" name="id" value="{{_id}}"/>
+                    </div>
                   {{ /each }}
                 {{ /if }}
                 <div style='color: grey'>+{{ slotsLeft this }} more slots</div>
