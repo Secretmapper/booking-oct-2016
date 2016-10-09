@@ -42,7 +42,7 @@
         <span class='card-title'>Ascott Makati</span>
         <div class='property-card__actions'>
           <a class='btn light-blue'>Book</a>
-          <button data-target="modal1" class="btn book-share light-blue modal-trigger {{#unless currentUser}} disabled {{/unless}}">Share Booking</button>
+          <button id="shareBooking" data-target="modal1" class="btn book-share light-blue modal-trigger {{#unless currentUser}} disabled {{/unless}}">Share Booking</button>
         </div>
       </div>
       <div class='card-content'>
@@ -75,8 +75,8 @@
               <li>
                 <div class='property__waiting-list-header collapsible-header'>
                   {{ header }}
-                  {{ #if hasJoined }}
-                  <a class="waves-effect waves-teal btn-flat btn-join {{ #unless currentUser }} disabled {{ /unless }}" data-id="{{this._id}}">Join</a>
+                  {{ #if hasNotJoined }}
+                    <a class="waves-effect waves-teal btn-flat btn-join {{ #unless currentUser }} disabled {{ /unless }}" data-id="{{this._id}}">Join</a>
                   {{ /if }}
                 </div>
               </li>

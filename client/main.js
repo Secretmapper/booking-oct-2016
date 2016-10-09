@@ -73,16 +73,25 @@ Template.waitingList.helpers({
   slotsLeft: function (s) {
    return s.max - s.user_ids.length
   },
-  hasJoined: function() {
-    return Template.instance().userJoined.get()
+  hasNotJoined: function() {
+    const result = !Template.instance().userJoined.get() && Meteor.user()
+    if (result) {
+      document.getElementById("shareBooking").disabled = false;
+      return true
+    } else {
+      document.getElementById("shareBooking").disabled = true;
+      return false
+    }
   },
   isInWaitList: function (s) {
+    console.log("checking if in wait list");
     for (var i = s.user_ids.length - 1; i >= 0; i--) {
       if (s.user_ids[i]._id == Meteor.userId()) {
-        return true;
         Template.instance().userJoined.set(true)
+        return true;
       }
     }
+    Template.instance().userJoined.set(false)
     return false
   },
   waitingList: function() {
