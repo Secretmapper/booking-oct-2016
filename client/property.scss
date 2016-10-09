@@ -19,6 +19,7 @@
   box-shadow: 0 0 2rem #e1e9f0;
 
   .card-image {
+    overflow: hidden;
     img {
       transform: translateY(-50%);
     }

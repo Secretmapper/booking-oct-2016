@@ -13,7 +13,8 @@ Template.bookShare.events({
 	      max: 4,
 	      header,
 	      description,
-	      user_ids: [{ _id: Meteor.userId(), name: Meteor.user().profile.name }]
+	      user_ids: [{ _id: Meteor.userId(), name: Meteor.user().profile.name }],
+        chat: [{ sender: 'system', msg: 'This is the start of your sharing chat. Coordinate with your broupies!' }]
 	    });
 	    event.target.header.value = '';
 	    event.target.description.value = '';

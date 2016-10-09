@@ -31,16 +31,54 @@ Template.chat.helpers({
   chatLoading() {
     return Template.instance().chatLoading.get();
   },
-  chat: Chat.find({ sess_id: Session.get('sess_id') }),
+  stringify (i) {
+    console.log(JSON.stringify(i))
+  },
+  activeChat () {
+    return Session.get('activeChat')
+  },
+  chatName () {
+    if (Session.get('activeChat')) {
+      return WaitingList.find({ _id: Session.get('activeChat') }).fetch()[0].header
+    } else {
+      return 'Broop'
+    }
+  },
+  chat () {
+    if (Session.get('activeChat')) {
+      const chat = WaitingList.find({ _id: Session.get('activeChat') }).fetch()[0].chat
+      return chat
+    } else {
+      return Chat.find({ sess_id: Session.get('sess_id') })
+    }
+  },
+  chatTab () {
+    return WaitingList.find({ user_ids: { _id: Meteor.userId(),     name: Meteor.user().profile.name      } })
+  },
+  shortHand (name) {
+    return name.match(/\b\w/g).join('')
+  },
+  username (id) {
+    return Meteor.users.findOne(id).profile.name
+  },
+  owned (id) {
+    if (Meteor.user()._id == id) {
+      return 'chat__msg--owned'
+    } else {
+      return ''
+    }
+  },
   chatColor(chat) {
-    if (chat.me) {
+    if (chat.sender == 'system')
+      return 'chat__msg--system'
+    else if (chat.sender == Meteor.userId()) {
+      return 'chat__msg--me';
+    }
+    else if (chat.me) {
       return 'chat__msg--me';
     } else {
       return 'chat__msg';
     }
-  },
-  counter() {
-    return Template.instance().counter.get();
   },
 });
 
@@ -50,15 +88,22 @@ Template.chat.events({
     const msg = e.target.msg.value
     e.target.msg.value = ''
 
-    Chat.insert({ sess_id: Session.get('sess_id'), me: true, msg })
-    Session.set('searchData', msg)
+    if (Session.get('activeChat')) {
+      WaitingList.update(Session.get('activeChat'), { $addToSet: { chat: { sender: Meteor.userId(), msg } }})
+    } else {
+      Chat.insert({ sess_id: Session.get('sess_id'), me: true, msg })
+      Session.set('searchData', msg)
 
-    instance.chatLoading.set(true)
-    Meteor.call('chat', Session.get('sess_id'), msg, JSON.parse(Session.get('context')), (err, context) => {
-      console.log(context)
-      Session.set('context', context)
-      instance.chatLoading.set(false)
-    })
+      instance.chatLoading.set(true)
+      Meteor.call('chat', Session.get('sess_id'), msg, JSON.parse(Session.get('context')), (err, context) => {
+        Session.set('context', context)
+        instance.chatLoading.set(false)
+      })
+    }
+  },
+  'click .chat__tabs-tab'(e, instance) {
+    e.preventDefault()
+    Session.set('activeChat', event.target.dataset.id)
   }
 });
 

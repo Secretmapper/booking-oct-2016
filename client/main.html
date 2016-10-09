@@ -14,14 +14,29 @@
 
 <template name='chat'>
   <div class='chat'>
-    {{ #each chat }}
-      <div class='{{ chatColor this }}'>
-        {{msg}}
-      </div>
-    {{ /each }}
-    {{ #if chatLoading }}
-      <div class='chat__msg--loading'>...</div>
-    {{ /if }}
+    <div class='chat-header'>
+      {{ chatName }}
+    </div>
+    <div class='chat-container'>
+      {{ #each chat }}
+        {{ #if activeChat }}
+          <div class='chat__msg--name {{owned sender }}'>
+            {{ username sender }}
+          </div>
+          <div class='{{ chatColor this }}'>
+            {{msg}}
+          </div>
+        {{ /if }}
+        {{ #unless activeChat }}
+          <div class='{{ chatColor this }}'>
+            {{msg}}
+          </div>
+        {{ /unless }}
+      {{ /each }}
+      {{ #if chatLoading }}
+        <div class='chat__msg--loading'>...</div>
+      {{ /if }}
+    </div>
     <div class='chat__input'>
       <form class='chat__input-form'>
         <div class="input-field">
@@ -29,6 +44,12 @@
         </div>
       </form>
       {{> login }}
+    </div>
+    <div class='chat__tabs'>
+      <div class='chat__tabs-tab' data-id=''><b>BP</b></div>
+      {{ # each chatTab }}
+        <div class='chat__tabs-tab' data-id='{{_id}}' style='text-transform: uppercase'>{{ shortHand header }}</div>
+      {{ /each }}
     </div>
   </div>
 </template>

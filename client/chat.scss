@@ -1,8 +1,12 @@
 .chat {
-  padding: 1rem;
   position: relative;
 }
 
+.chat-container {
+  padding-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
 .chat__msg {
   margin-bottom: 0.5rem;
   background: #03a9f4;
@@ -35,8 +39,38 @@
   text-align: right;
 }
 
+.chat__msg--system {
+  margin-bottom: 0.5rem;
+  margin: 0 auto;
+  color: gray;
+  max-width: 80%;
+  font-style: italic;
+  clear: both;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  text-align: center;
+}
+
 .chat__input {
+  left: 1rem;
   position: absolute;
   bottom: 0;
   width: 90%;
+}
+
+.chat__msg--name {
+  font-size: 0.7rem;
+  float: left;
+  clear: both;
+  color: gray;
+}
+
+.chat__msg--owned {
+  float: right !important;
+  clear:both;
+}
+
+.chat-header {
+  background-color: #F6F7F9;
+  padding: 0.5rem;
 }

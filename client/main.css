@@ -29,6 +29,26 @@ body {
   box-flex:  0; 
 }
 
+.chat-container {
+  overflow: auto;
+  height: calc(100vh - (120px));
+}
+
+.chat__tabs {
+  position: absolute;
+  top: 5px;
+  left: 300px;
+}
+
+.chat__tabs div {
+    padding: 0.5rem;
+    background: white;
+    border-bottom: 1px solid #03A9F4;
+    border-right: 1px solid #03A9F4;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+  }
+
 .property {
   background: #F4F7F9;
   box-flex: 1;
